@@ -1,0 +1,7 @@
+name: daylight
+main: com.frogman786.daylight
+version: 0.1
+
+commands:
+  day:
+    description: this is a day command
