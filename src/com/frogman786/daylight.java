@@ -33,29 +33,54 @@ public class daylight extends JavaPlugin implements Listener {
 		Player player = (Player) sender;
 		World world = player.getWorld();
 		if(lbl.equalsIgnoreCase("dawn")){
-			player.sendMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + world + ChatColor.WHITE + "to dawn.");
+			if(player.hasPermission("frog.daylight.dawn")){
+				player.sendMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + player.getWorld().getName() + ChatColor.WHITE + " to dawn.");
 			world.setTime(23000);
 			return true;
+			}else{
+				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+				return true;
+			}
 		}
 		if(lbl.equalsIgnoreCase("day")){
-			player.sendMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + world + ChatColor.WHITE + "to day.");
+			if(player.hasPermission("frog.daylight.dawn")){
+			player.sendMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + player.getWorld().getName() + ChatColor.WHITE + " to day.");
 			world.setTime(0);
 			return true;
+			}else{
+				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+				return true;
+			}
 		}
 		if(lbl.equalsIgnoreCase("noon")){
-			player.sendMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + world + ChatColor.WHITE + "to noon.");
+			if(player.hasPermission("frog.daylight.dawn")){
+			player.sendMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + player.getWorld().getName() + ChatColor.WHITE + " to noon.");
 			world.setTime(7000);
 			return true;
+			}else{
+				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+				return true;
+			}
 		}
 		if(lbl.equalsIgnoreCase("dusk")){
-			player.sendMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + world + ChatColor.WHITE + "to dusk.");
+			if(player.hasPermission("frog.daylight.dawn")){
+			player.sendMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + player.getWorld().getName() + ChatColor.WHITE + " to dusk.");
 			world.setTime(12500);
 			return true;
+			}else{
+				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+				return true;
+			}
 		}
 		if(lbl.equalsIgnoreCase("night")){
-			player.sendMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + world + ChatColor.WHITE + "to night.");
+			if(player.hasPermission("frog.daylight.dawn")){
+			player.sendMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + player.getWorld().getName() + ChatColor.WHITE + " to night.");
 			world.setTime(15000);
 			return true;
+			}else{
+				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+				return true;
+			}
 		}
 		return false; 
 	
