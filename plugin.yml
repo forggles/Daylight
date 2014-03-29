@@ -13,3 +13,32 @@ commands:
     description: makes dusk
   night:
     description: makes night
+permissions:
+    frog.*:
+        description: Gives access to all frog commands
+        children:
+            frog.time.*: true
+    frog.time.*:
+        children:
+            frog.time.dawn: true
+            frog.time.day: true
+            frog.time.noon: true
+            frog.time.dusk: true
+            frog.time.night: true
+        description: all time commands
+        default: op
+    frog.time.dawn:
+        description: dawn command
+        default: false
+    frog.time.day:
+        description: day command
+        default: false
+    frog.time.noon:
+        description: noon command
+        default: false
+    frog.time.dusk:
+        description: dusk command
+        default: false
+    frog.time.night:
+        description: night command
+        default: false
