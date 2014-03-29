@@ -13,6 +13,8 @@ commands:
     description: makes dusk
   night:
     description: makes night
+  who:
+    description: who is online
 permissions:
     frog.*:
         description: Gives access to all frog commands
