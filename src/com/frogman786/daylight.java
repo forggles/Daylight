@@ -1,7 +1,5 @@
 package com.frogman786;
 
-import java.util.logging.Logger;
-
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -79,6 +77,15 @@ public class daylight extends JavaPlugin implements Listener {
 				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
 				return true;
 			}
+		}
+			if(lbl.equalsIgnoreCase("who")){
+				if(player.hasPermission("frog.who.who")){
+					player.sendMessage("there are some people online");
+				return true;
+				}else{
+					player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+					return true;
+				}
 		}
 		return false; 
 	

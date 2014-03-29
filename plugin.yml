@@ -18,6 +18,7 @@ permissions:
         description: Gives access to all frog commands
         children:
             frog.time.*: true
+            frog.who.who: true
     frog.time.*:
         children:
             frog.time.dawn: true
@@ -42,3 +43,6 @@ permissions:
     frog.time.night:
         description: night command
         default: false
+    frog.who.who:
+        description: who command
+        default: true
