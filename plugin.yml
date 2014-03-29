@@ -3,5 +3,13 @@ main: com.frogman786.daylight
 version: 0.1
 
 commands:
+  dawn:
+    description: makes dawn
   day:
-    description: this is a day command
+    description: makes day
+  noon:
+    description: makes noon
+  dusk:
+    description: makes dusk
+  night:
+    description: makes night
