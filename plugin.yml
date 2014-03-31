@@ -1,6 +1,6 @@
 name: daylight
 main: com.frogman786.daylight
-version: 0.2
+version: 0.4
 
 commands:
   dawn:
@@ -15,12 +15,16 @@ commands:
     description: makes night
   who:
     description: who is online
+  gm:
+    description: gamemode toggle
 permissions:
     frog.*:
         description: Gives access to all frog commands
         children:
             frog.time.*: true
             frog.who.who: true
+            frog.gamemode.*: true
+        default: op
     frog.time.*:
         children:
             frog.time.dawn: true
@@ -29,7 +33,12 @@ permissions:
             frog.time.dusk: true
             frog.time.night: true
         description: all time commands
-        default: op
+        default: false
+    frog.gamemode.*:
+        children:
+            frog.gamemode.self: true
+            frog.gamemode.other: true
+        default: false
     frog.time.dawn:
         description: dawn command
         default: false
@@ -48,3 +57,6 @@ permissions:
     frog.who.who:
         description: who command
         default: true
+    frog.gamemode.self:
+        description: /gm
+        default: false

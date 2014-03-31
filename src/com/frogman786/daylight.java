@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.Listener;
+import org.bukkit.permissions.*;
 
 public class daylight extends JavaPlugin implements Listener {
 
@@ -80,14 +81,23 @@ public class daylight extends JavaPlugin implements Listener {
 				return true;
 			}
 		}
-			if(lbl.equalsIgnoreCase("who")){
-				if(player.hasPermission("frog.who.who")){
-					player.sendMessage("there are some people online");
+		if(lbl.equalsIgnoreCase("who")){
+			if(player.hasPermission("frog.who.who")){
+				player.sendMessage("there are some people online");
+			return true;
+			}else{
+				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
 				return true;
-				}else{
-					player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
-					return true;
-				}
+			}
+		}
+		if(lbl.equalsIgnoreCase("gm")){
+			if(player.hasPermission("frog.gamemode.self")){
+				player.sendMessage("Gamemode set to" + ChatColor.DARK_GREEN + "nothing");
+			return true;
+			}else{
+				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+				return true;
+			}
 		}
 		return false; 
 	
