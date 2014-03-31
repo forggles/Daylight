@@ -1,6 +1,6 @@
 name: daylight
 main: com.frogman786.daylight
-version: 0.4
+version: 0.5
 
 commands:
   dawn:
@@ -17,6 +17,8 @@ commands:
     description: who is online
   gm:
     description: gamemode toggle
+  platform:
+    description: creates a block of glass below your feet
 permissions:
     frog.*:
         description: Gives access to all frog commands
@@ -24,6 +26,7 @@ permissions:
             frog.time.*: true
             frog.who.who: true
             frog.gamemode.*: true
+            frog.platform.*: true
         default: op
     frog.time.*:
         children:
@@ -38,6 +41,12 @@ permissions:
         children:
             frog.gamemode.self: true
             frog.gamemode.other: true
+        default: false
+    frog.platform.*:
+        children:
+            frog.platform.single: true
+            frog.platform.toggle: true
+            frog.platform.other: true
         default: false
     frog.time.dawn:
         description: dawn command
@@ -59,4 +68,7 @@ permissions:
         default: true
     frog.gamemode.self:
         description: /gm
+        default: false
+    frog.platform.single:
+        description: creates a block of glass below your feet
         default: false

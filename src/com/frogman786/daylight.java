@@ -3,7 +3,10 @@ package com.frogman786;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -92,6 +95,20 @@ public class daylight extends JavaPlugin implements Listener {
 		if(lbl.equalsIgnoreCase("gm")){
 			if(player.hasPermission("frog.gamemode.self")){
 				player.sendMessage("Gamemode set to" + ChatColor.DARK_GREEN + "nothing");
+			return true;
+			}else{
+				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+				return true;
+			}
+		}
+		//NEED TO ADD REGION AND AIR CHECKING TO THIS
+		if(lbl.equalsIgnoreCase("platform")){
+			if(player.hasPermission("frog.platform.single")){
+			    Location loc = player.getPlayer().getLocation();
+			    loc.setY(loc.getY() - 1);
+			    Block b = loc.getBlock();
+			    b.setType(Material.GLASS);
+				player.sendMessage(ChatColor.DARK_GREEN + "Platform created.");
 			return true;
 			}else{
 				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
