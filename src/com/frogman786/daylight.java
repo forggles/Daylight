@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.Listener;
-import org.bukkit.permissions.*;
 
 public class daylight extends JavaPlugin implements Listener {
 
@@ -32,7 +31,7 @@ public class daylight extends JavaPlugin implements Listener {
 		Player player = (Player) sender;
 		World world = player.getWorld();
 		if(lbl.equalsIgnoreCase("dawn")){
-			if(player.hasPermission("frog.daylight.dawn")){
+			if(player.hasPermission("frog.time.dawn")){
 				getServer().broadcastMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + player.getWorld().getName() + ChatColor.WHITE + " to dawn.");
 				world.setTime(23000);
 				return true;
@@ -42,7 +41,7 @@ public class daylight extends JavaPlugin implements Listener {
 			}
 		}
 		if(lbl.equalsIgnoreCase("day")){
-			if(player.hasPermission("frog.daylight.day")){
+			if(player.hasPermission("frog.time.day")){
 				getServer().broadcastMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + player.getWorld().getName() + ChatColor.WHITE + " to day.");
 				world.setTime(0);
 				return true;
@@ -52,7 +51,7 @@ public class daylight extends JavaPlugin implements Listener {
 			}
 		}
 		if(lbl.equalsIgnoreCase("noon")){
-			if(player.hasPermission("frog.daylight.noon")){
+			if(player.hasPermission("frog.time.noon")){
 				getServer().broadcastMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + player.getWorld().getName() + ChatColor.WHITE + " to noon.");
 				world.setTime(7000);
 				return true;
@@ -62,7 +61,7 @@ public class daylight extends JavaPlugin implements Listener {
 			}
 		}
 		if(lbl.equalsIgnoreCase("dusk")){
-			if(player.hasPermission("frog.daylight.dusk")){
+			if(player.hasPermission("frog.time.dusk")){
 				getServer().broadcastMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + player.getWorld().getName() + ChatColor.WHITE + " to dusk.");
 				world.setTime(12500);
 				return true;
@@ -72,7 +71,7 @@ public class daylight extends JavaPlugin implements Listener {
 			}
 		}
 		if(lbl.equalsIgnoreCase("night")){
-			if(player.hasPermission("frog.daylight.night")){
+			if(player.hasPermission("frog.time.night")){
 				getServer().broadcastMessage(player.getPlayerListName() + ChatColor.WHITE +" Set " + ChatColor.DARK_GREEN + player.getWorld().getName() + ChatColor.WHITE + " to night.");
 				world.setTime(15000);
 				return true;
