@@ -126,10 +126,10 @@ public class daylight extends JavaPlugin implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent evt) {
 	    Player player = evt.getPlayer();
 		evt.setJoinMessage(player.getPlayerListName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
-	}
+	    }
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent evt) {
 	    Player player = evt.getPlayer();
-	    evt.setQuitMessage(player.getPlayerListName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
+	    evt.setQuitMessage(player.getPlayerListName() + ChatColor.WHITE + " quit " + ChatColor.RED + (Bukkit.getOnlinePlayers().length - 1) + ChatColor.GREEN + " players" + ChatColor.WHITE + " left");
 	}
 }
