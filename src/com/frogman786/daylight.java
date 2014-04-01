@@ -2,6 +2,7 @@ package com.frogman786;
 
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,7 +13,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class daylight extends JavaPlugin implements Listener {
 
@@ -118,5 +122,14 @@ public class daylight extends JavaPlugin implements Listener {
 		return false; 
 	
 	}
-
+	@EventHandler
+	public void onPlayerJoin(PlayerJoinEvent evt) {
+	    Player player = evt.getPlayer();
+		evt.setJoinMessage(player.getPlayerListName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
+	}
+	@EventHandler
+	public void onPlayerQuit(PlayerQuitEvent evt) {
+	    Player player = evt.getPlayer();
+	    evt.setQuitMessage(player.getPlayerListName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
+	}
 }
