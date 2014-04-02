@@ -63,20 +63,20 @@ public class daylight extends JavaPlugin implements Listener {
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String lbl, String[] args){
 		Player player = (Player) sender;
-		World world = player.getWorld();
 		int period = 0;
+		
 		if(lbl.equalsIgnoreCase("dawn")|lbl.equalsIgnoreCase("day")|lbl.equalsIgnoreCase("noon")|lbl.equalsIgnoreCase("dusk")|lbl.equalsIgnoreCase("night")){
 			if(player.hasPermission("frog.time." + lbl)){
-				if(lbl == "dawn"){
+				if(lbl.equalsIgnoreCase("dawn")){
 					period = 23000;
 				}else{
-					if(lbl == "day"){
+					if(lbl.equalsIgnoreCase("day")){
 						period = 0;
 					}else{
-						if(lbl == "noon"){
+						if(lbl.equalsIgnoreCase("noon")){
 							period = 7000;
 						}else{
-							if(lbl == "dusk"){
+							if(lbl.equalsIgnoreCase("dusk")){
 								period = 12500;
 							}else{
 								period = 15000;
