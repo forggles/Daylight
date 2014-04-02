@@ -1,6 +1,6 @@
 name: daylight
 main: com.frogman786.daylight
-version: 0.6
+version: 0.6.4
 
 commands:
   dawn:
