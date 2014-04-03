@@ -1,6 +1,5 @@
 package com.frogman786;
 
-import java.util.HashMap;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -17,7 +16,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class daylight extends JavaPlugin implements Listener {
@@ -35,24 +33,6 @@ public class daylight extends JavaPlugin implements Listener {
 		PluginDescriptionFile pdfFile = this.getDescription();
 		this.Log.info(pdfFile.getName() + " " + pdfFile.getVersion() +  " Has Been Enabled! ");
 	}
-
-//	public HashMap<String, Boolean> platform = new HashMap<String, Boolean>();
-	
-//	public void togglePlatform(Player player) {
-//	    String playerName = player.getName();
-//	    if (platform.containsKey(playerName)) {
-//	        if (platform.get(playerName)) {
-//	        	platform.put(playerName, false);
-//	            player.sendMessage("Platform Toggle off");
-//	        } else {
-//	            platform.put(playerName, true);
-//	            player.sendMessage("Platform Toggle on");
-//	        }
-//	    } else {
-//	        platform.put(playerName, false); //If you want plugin disabled by default change this value to false.
-//	        player.sendMessage("Platform Toggle off");
-//	    }
-//	}
 	
 	public void time(Player player, String period, Integer time){
 		World world = player.getWorld();
@@ -132,35 +112,34 @@ public class daylight extends JavaPlugin implements Listener {
 	
 	}
     
-	@EventHandler
+	@EventHandler //TIDY SOON
 	public void onPlayerJoin(PlayerJoinEvent evt) {
 	    Player player = evt.getPlayer();
+	    Enum<ChatColor> colour = ChatColor.YELLOW;
 	    if(player.hasPermission("nametags.color.dark_blue")){
-	    	evt.setJoinMessage(ChatColor.DARK_BLUE + player.getDisplayName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
+	    	colour = ChatColor.DARK_BLUE;
 	    }else{
 	    	if(player.hasPermission("nametags.color.dark_green")){
-		    	evt.setJoinMessage(ChatColor.DARK_GREEN + player.getDisplayName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
+		    	colour = ChatColor.DARK_GREEN;
 		    }else{
 		    	if(player.hasPermission("nametags.color.gold")){
-			    	evt.setJoinMessage(ChatColor.GOLD + player.getDisplayName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
+		    		colour = ChatColor.GOLD;
 			    }else{
 			    	if(player.hasPermission("nametags.color.blue")){
-				    	evt.setJoinMessage(ChatColor.BLUE + player.getDisplayName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
+			    		colour = ChatColor.BLUE;
 				    }else{
 				    	if(player.hasPermission("nametags.color.green")){
-					    	evt.setJoinMessage(ChatColor.GREEN + player.getDisplayName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
+				    		colour = ChatColor.GREEN;
 					    }else{
 					    	if(player.hasPermission("nametags.color.aqua")){
-						    	evt.setJoinMessage(ChatColor.AQUA + player.getDisplayName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
+					    		colour = ChatColor.AQUA;
 						    }else{
 						    	if(player.hasPermission("nametags.color.red")){
-							    	evt.setJoinMessage(ChatColor.RED + player.getDisplayName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
+						    		colour = ChatColor.RED;
 							    }else{
 							    	if(player.hasPermission("nametags.color.light_purple")){
-								    	evt.setJoinMessage(ChatColor.LIGHT_PURPLE + player.getDisplayName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
-								    }else{
-									    evt.setJoinMessage(ChatColor.YELLOW + player.getDisplayName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
-									}
+							    		colour = ChatColor.LIGHT_PURPLE;
+								    }
 							    }
 						    }
 					    }
@@ -168,20 +147,11 @@ public class daylight extends JavaPlugin implements Listener {
 			    }
 		    }
 		}
+	    evt.setJoinMessage(colour + player.getDisplayName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
 	}
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent evt) {
 	    Player player = evt.getPlayer();
 	    evt.setQuitMessage(player.getPlayerListName() + ChatColor.WHITE + " quit " + ChatColor.RED + (Bukkit.getOnlinePlayers().length - 1) + ChatColor.GREEN + " players" + ChatColor.WHITE + " left");
 	}
-//	@EventHandler
-//	public void onPlayerMove(PlayerMoveEvent evt) {
-//	    Player player = (Player) evt.getPlayer();
-//	    if(platform.containsKey(player) & platform.get(player)){
-//	    	Location loc = evt.getPlayer().getLocation();
-//	    	loc.setY(loc.getY() - 1);
-//	    	Block b = loc.getBlock();
-//	    	b.setType(Material.GLASS);
-//		}
-//	}
 }
