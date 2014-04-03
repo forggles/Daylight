@@ -3,6 +3,7 @@
 	<name>daylight</name>
 	<comment></comment>
 	<projects>
+		<project>Vault</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

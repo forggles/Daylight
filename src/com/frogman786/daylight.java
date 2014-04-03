@@ -17,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import net.milkbowl.vault.permission.*;
 
 public class daylight extends JavaPlugin implements Listener {
 
@@ -99,20 +100,25 @@ public class daylight extends JavaPlugin implements Listener {
 			    b.setType(Material.GLASS);
 				player.sendMessage(ChatColor.DARK_GREEN + "Platform created.");
 			return true;
-//			}
-//		    if(player.hasPermission("frog.platform.toggle") & args[0] == "toggle"){
-//				togglePlatform(player);
-//				return true;
 			}else{
 				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
 				return true;
+			}
+		}
+		if(lbl.equalsIgnoreCase("promo")){
+			Player promoto = Bukkit.getServer().getPlayer(args[1]);
+			String rank = args[0];
+			if(player.hasPermission("frog.promo.secret") & args[2] == "secret"){
+				getServer().broadcast(ChatColor.GRAY + "[SECRET PROMO]" + promoto.getPlayerListName() + ChatColor.WHITE + " has been promoted to " + rank , "frog.promo.secret");
+			}else{
+				getServer().broadcastMessage(promoto.getPlayerListName() + ChatColor.WHITE + " has been promoted to " + rank);
 			}
 		}
 		return false; 
 	
 	}
     
-	@EventHandler //TIDY SOON
+	@EventHandler //Tidy later, it's better now anyway
 	public void onPlayerJoin(PlayerJoinEvent evt) {
 	    Player player = evt.getPlayer();
 	    Enum<ChatColor> colour = ChatColor.YELLOW;
