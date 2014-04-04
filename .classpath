@@ -8,5 +8,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/workspace/java/Vault.jar" sourcepath="/Vault/src"/>
+	<classpathentry kind="src" path="/Vault"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

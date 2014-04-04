@@ -17,7 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import net.milkbowl.vault.permission.*;
+import net.milkbowl.vault.permission.Permission;
 
 public class daylight extends JavaPlugin implements Listener {
 
@@ -106,12 +106,14 @@ public class daylight extends JavaPlugin implements Listener {
 			}
 		}
 		if(lbl.equalsIgnoreCase("promo")){
-			Player promoto = Bukkit.getServer().getPlayer(args[1]);
-			String rank = args[0];
-			if(player.hasPermission("frog.promo.secret") & args[2] == "secret"){
-				getServer().broadcast(ChatColor.GRAY + "[SECRET PROMO]" + promoto.getPlayerListName() + ChatColor.WHITE + " has been promoted to " + rank , "frog.promo.secret");
-			}else{
-				getServer().broadcastMessage(promoto.getPlayerListName() + ChatColor.WHITE + " has been promoted to " + rank);
+			if(player.hasPermission("frog.promo.*")){
+				String promoto = Bukkit.getServer().getPlayer(args[1]).getName();
+				String rank = args[0];
+				if(player.hasPermission("frog.promo.secret") & args[2] == "secret"){
+					getServer().broadcast(ChatColor.GRAY + "[SECRET PROMO]" + promoto + ChatColor.WHITE + " has been promoted to " + rank , "frog.promo.secret");
+				}else{
+					getServer().broadcastMessage(promoto + ChatColor.WHITE + " has been promoted to " + rank);
+				}
 			}
 		}
 		return false; 

@@ -1,7 +1,7 @@
 name: daylight
 main: com.frogman786.daylight
-version: 0.6.5
-
+version: 0.6.7
+depend: [Vault]
 commands:
   dawn:
     description: makes dawn
@@ -19,6 +19,8 @@ commands:
     description: gamemode toggle
   platform:
     description: creates a block of glass below your feet
+  promo:
+    description: used to handle rank giving/taking
 permissions:
     frog.*:
         description: Gives access to all frog commands
@@ -27,6 +29,7 @@ permissions:
             frog.who.who: true
             frog.gamemode.*: true
             frog.platform.*: true
+            frog.promo.*: true
         default: op
     frog.time.*:
         children:
@@ -71,4 +74,7 @@ permissions:
         default: false
     frog.platform.single:
         description: creates a block of glass below your feet
+        default: false
+    frog.promo.*:
+        description: all promos
         default: false
