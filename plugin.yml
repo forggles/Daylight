@@ -26,7 +26,7 @@ permissions:
         description: Gives access to all frog commands
         children:
             frog.time.*: true
-            frog.who.who: true
+            frog.who.*: true
             frog.gamemode.*: true
             frog.platform.*: true
             frog.promo.*: true
@@ -40,6 +40,11 @@ permissions:
             frog.time.night: true
         description: all time commands
         default: false
+    frog.who.*:
+        children:
+            frog.who.who: true
+            frog.who.info: true
+        default false
     frog.gamemode.*:
         children:
             frog.gamemode.self: true
@@ -66,15 +71,25 @@ permissions:
     frog.time.night:
         description: night command
         default: false
+
     frog.who.who:
         description: who command
         default: true
+    frog.who.info:
+        description: complex who with info on all players
+        default: false
+
     frog.gamemode.self:
         description: /gm
         default: false
+    frog.gamemode.other:
+        description: /gm <name>
+        default: false
+
     frog.platform.single:
         description: creates a block of glass below your feet
         default: false
+
     frog.promo.*:
         description: all promos
         default: false
