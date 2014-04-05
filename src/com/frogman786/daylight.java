@@ -15,6 +15,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import net.milkbowl.vault.permission.Permission;
@@ -41,12 +42,21 @@ public class daylight extends JavaPlugin implements Listener {
 		world.setTime(time);
 	}
 	
+	public void togglegm(Player p){
+		if (p.getGameMode() == org.bukkit.GameMode.CREATIVE) {
+            p.setGameMode(org.bukkit.GameMode.SURVIVAL);
+            p.sendMessage("Gamemode set to" + ChatColor.DARK_GREEN + " survival");
+        } else {
+            p.setGameMode(org.bukkit.GameMode.CREATIVE);
+			p.sendMessage("Gamemode set to" + ChatColor.DARK_GREEN + " creative");
+        }
+	}
+	
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String lbl, String[] args){
 		Player player = (Player) sender;
-		int period = 0;
-		
 		if(lbl.equalsIgnoreCase("dawn")|lbl.equalsIgnoreCase("day")|lbl.equalsIgnoreCase("noon")|lbl.equalsIgnoreCase("dusk")|lbl.equalsIgnoreCase("night")){
+			int period = 0;
 			if(player.hasPermission("frog.time." + lbl)){
 				if(lbl.equalsIgnoreCase("dawn")){
 					period = 23000;
@@ -74,21 +84,47 @@ public class daylight extends JavaPlugin implements Listener {
 		}
 
 		if(lbl.equalsIgnoreCase("who")){
-			if(player.hasPermission("frog.who.who")){
-				player.sendMessage("there are some people online");
-			return true;
+			if(sender instanceof Player){
+				if(player.hasPermission("frog.who.who")){
+					StringBuilder online = new StringBuilder();
+						Player[] players = Bukkit.getOnlinePlayers();
+						for (Player listplayer : players) {
+							// If a player is hidden from the sender don't show them in the list
+							if (sender instanceof Player && !((Player) sender).canSee(listplayer))
+								continue;				              
+							if (online.length() > 0) {
+								online.append(", ");
+							}	 
+							online.append(player.getDisplayName());
+						}
+						sender.sendMessage(ChatColor.GREEN +"Online players " + ChatColor.RED + players.length + ChatColor.WHITE + " : " + online.toString());
+						return true;
+				}else{
+					player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+					return true;
+				}
 			}else{
-				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
-				return true;
+				sender.sendMessage("no console use");
 			}
 		}
 		if(lbl.equalsIgnoreCase("gm")){
-			if(player.hasPermission("frog.gamemode.self")){
-				player.sendMessage("Gamemode set to" + ChatColor.DARK_GREEN + "nothing");
+			if( args.length == 0 && player.hasPermission("frog.gamemode.self")){
+		        togglegm(player);
 			return true;
 			}else{
-				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
-				return true;
+				if( args.length == 1 && player.hasPermission("frog.gamemode.other")){
+					Player playerto = Bukkit.getServer().getPlayer(args[0]);
+					if(playerto !=null){
+						togglegm(playerto);
+						return true;
+					}else{
+						player.sendMessage(ChatColor.RED + "Could not find player " + args[0]);
+						return true;
+					}
+				}else{
+					player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+					return true;
+				}
 			}
 		}
 		//NEED TO ADD REGION AND AIR CHECKING TO THIS
@@ -99,7 +135,7 @@ public class daylight extends JavaPlugin implements Listener {
 			    Block b = loc.getBlock();
 			    b.setType(Material.GLASS);
 				player.sendMessage(ChatColor.DARK_GREEN + "Platform created.");
-			return true;
+				return true;
 			}else{
 				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
 				return true;
@@ -109,15 +145,21 @@ public class daylight extends JavaPlugin implements Listener {
 			if(player.hasPermission("frog.promo.*")){
 				String promoto = Bukkit.getServer().getPlayer(args[1]).getName();
 				String rank = args[0];
-				if(player.hasPermission("frog.promo.secret") & args[2] == "secret"){
+				if(player.hasPermission("frog.promo.secret") && args[2] == "secret"){
 					getServer().broadcast(ChatColor.GRAY + "[SECRET PROMO]" + promoto + ChatColor.WHITE + " has been promoted to " + rank , "frog.promo.secret");
+					return true;
 				}else{
 					getServer().broadcastMessage(promoto + ChatColor.WHITE + " has been promoted to " + rank);
+					return true;
 				}
 			}
 		}
-		return false; 
-	
+		if(lbl.equalsIgnoreCase("whoinfo")){// might add this onto /who as /who info when I get around to writing it
+			if(player.hasPermission("frog.who.info")){
+				player.sendMessage("will show some info about all logged on players");//this command will most likely be quite heavy, loop through the players list grabbing rank world position login time etc. for each player
+			}
+		}
+		return false;
 	}
     
 	@EventHandler //Tidy later, it's better now anyway
@@ -159,7 +201,7 @@ public class daylight extends JavaPlugin implements Listener {
 			    }
 		    }
 		}
-	    evt.setJoinMessage(colour + player.getDisplayName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + plural);
+	    evt.setJoinMessage(colour + player.getName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + plural);
 	}
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent evt) {
@@ -200,7 +242,14 @@ public class daylight extends JavaPlugin implements Listener {
 			    }
 		    }
 		}
-	    evt.setQuitMessage(colour + player.getPlayerListName() + ChatColor.WHITE + " quit " + ChatColor.RED + (Bukkit.getOnlinePlayers().length - 1) + ChatColor.GREEN + plural + ChatColor.WHITE + " left");
+	    evt.setQuitMessage(colour + player.getName() + ChatColor.WHITE + " quit " + ChatColor.RED + (Bukkit.getOnlinePlayers().length - 1) + ChatColor.GREEN + plural + ChatColor.WHITE + " left");
 	}
-
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent evt){
+		String message = evt.getDeathMessage();
+		if(message.startsWith("frogman786 was slain")){
+			String messagemodifyed = (message + ", but actually wasn't, because nobody can kill the great frog.");
+			evt.setDeathMessage(messagemodifyed);
+		}
+	}
 }
