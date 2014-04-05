@@ -93,7 +93,7 @@ public class daylight extends JavaPlugin implements Listener {
 		}
 		//NEED TO ADD REGION AND AIR CHECKING TO THIS
 		if(lbl.equalsIgnoreCase("platform")){
-			if(player.hasPermission("frog.platform.single") & args[0] == null){
+			if(player.hasPermission("frog.platform.single")){
 			    Location loc = player.getPlayer().getLocation();
 			    loc.setY(loc.getY() - 1);
 			    Block b = loc.getBlock();
@@ -124,6 +124,10 @@ public class daylight extends JavaPlugin implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent evt) {
 	    Player player = evt.getPlayer();
 	    Enum<ChatColor> colour = ChatColor.YELLOW;
+	    String plural = " players";
+	    if(Bukkit.getOnlinePlayers().length == 1){
+	    	plural = " player";
+	    }
 	    if(player.hasPermission("nametags.color.dark_blue")){
 	    	colour = ChatColor.DARK_BLUE;
 	    }else{
@@ -155,11 +159,48 @@ public class daylight extends JavaPlugin implements Listener {
 			    }
 		    }
 		}
-	    evt.setJoinMessage(colour + player.getDisplayName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + " players");
+	    evt.setJoinMessage(colour + player.getDisplayName() + ChatColor.WHITE + " logged in, making " + ChatColor.RED + Bukkit.getOnlinePlayers().length + ChatColor.GREEN + plural);
 	}
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent evt) {
 	    Player player = evt.getPlayer();
-	    evt.setQuitMessage(player.getPlayerListName() + ChatColor.WHITE + " quit " + ChatColor.RED + (Bukkit.getOnlinePlayers().length - 1) + ChatColor.GREEN + " players" + ChatColor.WHITE + " left");
+	    Enum<ChatColor> colour = ChatColor.YELLOW;
+	    String plural = " players";
+	    if(Bukkit.getOnlinePlayers().length-1 == 1){
+	    	plural = " player";
+	    }
+	    if(player.hasPermission("nametags.color.dark_blue")){
+	    	colour = ChatColor.DARK_BLUE;
+	    }else{
+	    	if(player.hasPermission("nametags.color.dark_green")){
+		    	colour = ChatColor.DARK_GREEN;
+		    }else{
+		    	if(player.hasPermission("nametags.color.gold")){
+		    		colour = ChatColor.GOLD;
+			    }else{
+			    	if(player.hasPermission("nametags.color.blue")){
+			    		colour = ChatColor.BLUE;
+				    }else{
+				    	if(player.hasPermission("nametags.color.green")){
+				    		colour = ChatColor.GREEN;
+					    }else{
+					    	if(player.hasPermission("nametags.color.aqua")){
+					    		colour = ChatColor.AQUA;
+						    }else{
+						    	if(player.hasPermission("nametags.color.red")){
+						    		colour = ChatColor.RED;
+							    }else{
+							    	if(player.hasPermission("nametags.color.light_purple")){
+							    		colour = ChatColor.LIGHT_PURPLE;
+								    }
+							    }
+						    }
+					    }
+				    }
+			    }
+		    }
+		}
+	    evt.setQuitMessage(colour + player.getPlayerListName() + ChatColor.WHITE + " quit " + ChatColor.RED + (Bukkit.getOnlinePlayers().length - 1) + ChatColor.GREEN + plural + ChatColor.WHITE + " left");
 	}
+
 }
