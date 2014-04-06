@@ -44,7 +44,7 @@ permissions:
         children:
             frog.who.who: true
             frog.who.info: true
-        default false
+        default: false
     frog.gamemode.*:
         children:
             frog.gamemode.self: true
