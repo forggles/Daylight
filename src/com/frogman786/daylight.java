@@ -95,7 +95,7 @@ public class daylight extends JavaPlugin implements Listener {
 							if (online.length() > 0) {
 								online.append(", ");
 							}	 
-							online.append(player.getDisplayName());
+							online.append(listplayer.getDisplayName());
 						}
 						sender.sendMessage(ChatColor.GREEN +"Online players " + ChatColor.RED + players.length + ChatColor.WHITE + " : " + online.toString());
 						return true;

@@ -1,6 +1,6 @@
 name: daylight
 main: com.frogman786.daylight
-version: 0.7.2
+version: 0.7.4
 depend: [Vault]
 commands:
   dawn:
