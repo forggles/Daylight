@@ -84,27 +84,45 @@ public class daylight extends JavaPlugin implements Listener {
 		}
 
 		if(lbl.equalsIgnoreCase("who")){
-			if(sender instanceof Player){
-				if(player.hasPermission("frog.who.who")){
-					StringBuilder online = new StringBuilder();
-						Player[] players = Bukkit.getOnlinePlayers();
-						for (Player listplayer : players) {
-							// If a player is hidden from the sender don't show them in the list
-							if (sender instanceof Player && !((Player) sender).canSee(listplayer))
-								continue;				              
-							if (online.length() > 0) {
-								online.append(", ");
-							}	 
-							online.append(listplayer.getDisplayName());
-						}
-						sender.sendMessage(ChatColor.GREEN +"Online players " + ChatColor.RED + players.length + ChatColor.WHITE + " : " + online.toString());
-						return true;
-				}else{
-					player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+			if(args.length == 0 && player.hasPermission("frog.who.who")){
+				StringBuilder online = new StringBuilder();
+				Player[] players = Bukkit.getOnlinePlayers();
+				for(Player listplayer : players){
+					// If a player is hidden from the sender don't show them in the list
+					if(sender instanceof Player && !((Player) sender).canSee(listplayer))
+						continue;				              
+						if(online.length() > 0){
+							online.append(", ");
+						}	 
+						online.append(listplayer.getDisplayName());
+					}
+					sender.sendMessage(ChatColor.GREEN +"Online players " + ChatColor.RED + players.length + ChatColor.WHITE + " : " + online.toString());
 					return true;
-				}
-			}else{
-				sender.sendMessage("no console use");
+				}else{
+					if(args.length == 1 && player.hasPermission("frog.who.info")){
+						if(args[0].equalsIgnoreCase("info")){
+							StringBuilder infoonline = new StringBuilder();
+							Player[] players = Bukkit.getOnlinePlayers();
+							for(Player listplayer : players){
+								// If a player is hidden from the sender don't show them in the list
+								if(sender instanceof Player && !((Player) sender).canSee(listplayer))
+									continue;				              
+									if(infoonline.length() > 0){
+										infoonline.append("\n");
+									} 
+									int x = (int) listplayer.getLocation().getX();
+									int y = (int) listplayer.getLocation().getY();
+									int z = (int) listplayer.getLocation().getZ();
+									infoonline.append(listplayer.getDisplayName() + ChatColor.WHITE + ", world: " + listplayer.getWorld().getName() + ", Location: " + x+","+y+","+z);
+									
+								}
+								sender.sendMessage(ChatColor.GREEN +"Online players " + ChatColor.RED + players.length + ChatColor.WHITE + " :\n" + infoonline.toString());
+								return true;
+						}
+					}else{
+						player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+						return true;
+					}
 			}
 		}
 		if(lbl.equalsIgnoreCase("gm")){
