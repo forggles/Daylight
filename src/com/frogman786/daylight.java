@@ -16,6 +16,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import net.milkbowl.vault.permission.Permission;
@@ -50,6 +53,32 @@ public class daylight extends JavaPlugin implements Listener {
             p.setGameMode(org.bukkit.GameMode.CREATIVE);
 			p.sendMessage("Gamemode set to" + ChatColor.DARK_GREEN + " creative");
         }
+	}
+
+	public String formatMessage(String message){
+		char ColourSymbol = '\u00A7';
+		message = message.replaceAll("&0", ColourSymbol + "0");
+		message = message.replaceAll("&1", ColourSymbol + "1");
+		message = message.replaceAll("&2", ColourSymbol + "2");
+		message = message.replaceAll("&3", ColourSymbol + "3");
+		message = message.replaceAll("&4", ColourSymbol + "4");
+		message = message.replaceAll("&5", ColourSymbol + "5");
+    	message = message.replaceAll("&6", ColourSymbol + "6");
+    	message = message.replaceAll("&7", ColourSymbol + "7");
+    	message = message.replaceAll("&8", ColourSymbol + "8");
+    	message = message.replaceAll("&9", ColourSymbol + "9");
+    	message = message.replaceAll("&a", ColourSymbol + "a");
+    	message = message.replaceAll("&b", ColourSymbol + "b");
+    	message = message.replaceAll("&c", ColourSymbol + "c");
+    	message = message.replaceAll("&d", ColourSymbol + "d");
+    	message = message.replaceAll("&e", ColourSymbol + "e");
+    	message = message.replaceAll("&f", ColourSymbol + "f");
+    	message = message.replaceAll("&l", ColourSymbol + "l");
+    	message = message.replaceAll("&m", ColourSymbol + "m");
+    	message = message.replaceAll("&n", ColourSymbol + "n");
+    	message = message.replaceAll("&o", ColourSymbol + "o");
+    	message = message.replaceAll("&k", ColourSymbol + "k");
+    	return message;
 	}
 	
 	
@@ -99,8 +128,8 @@ public class daylight extends JavaPlugin implements Listener {
 					sender.sendMessage(ChatColor.GREEN +"Online players " + ChatColor.RED + players.length + ChatColor.WHITE + " : " + online.toString());
 					return true;
 				}else{
-					if(args.length == 1 && player.hasPermission("frog.who.info")){
-						if(args[0].equalsIgnoreCase("info")){
+					if(args.length == 1){
+						if(args[0].equalsIgnoreCase("info") && player.hasPermission("frog.who.info")){
 							StringBuilder infoonline = new StringBuilder();
 							Player[] players = Bukkit.getOnlinePlayers();
 							for(Player listplayer : players){
@@ -118,11 +147,27 @@ public class daylight extends JavaPlugin implements Listener {
 								}
 								sender.sendMessage(ChatColor.GREEN +"Online players " + ChatColor.RED + players.length + ChatColor.WHITE + " :\n" + infoonline.toString());
 								return true;
+						}else{
+							if(args[0].equalsIgnoreCase("*") && player.hasPermission("frog.who.world")){
+								StringBuilder online = new StringBuilder();
+								Player[] players = Bukkit.getOnlinePlayers();
+								for(Player listplayer : players){
+									// If a player is hidden from the sender don't show them in the list
+									if(sender instanceof Player && !((Player) sender).canSee(listplayer))
+										continue;				              
+										if(online.length() > 0){
+											online.append(", ");
+										}	 
+											online.append(listplayer.getDisplayName() +ChatColor.WHITE+"["+listplayer.getWorld().getName()+"]");
+										}
+										sender.sendMessage(ChatColor.GREEN +"Online players " + ChatColor.RED + players.length + ChatColor.WHITE + " : " + online.toString());
+										return true;
+							}else{
+								player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+								return true;
 						}
-					}else{
-						player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
-						return true;
 					}
+				}
 			}
 		}
 		if(lbl.equalsIgnoreCase("gm")){
@@ -172,9 +217,35 @@ public class daylight extends JavaPlugin implements Listener {
 				}
 			}
 		}
-		if(lbl.equalsIgnoreCase("whoinfo")){// might add this onto /who as /who info when I get around to writing it
-			if(player.hasPermission("frog.who.info")){
-				player.sendMessage("will show some info about all logged on players");//this command will most likely be quite heavy, loop through the players list grabbing rank world position login time etc. for each player
+		if(lbl.equalsIgnoreCase("world")){
+			if(player.hasPermission("frog.world.self") && args.length == 0){
+				player.sendMessage(ChatColor.DARK_GREEN+"You are in"+ChatColor.WHITE+": "+ChatColor.YELLOW+player.getWorld().getName());
+			}else{
+				if(player.hasPermission("frog.world.other") && args.length == 1){
+					Player other = getServer().getPlayer(args[0]);
+					if(other == null){
+						player.sendMessage(ChatColor.RED + "ERROR: player not found");
+						return true;
+					}else{
+						player.sendMessage(other.getDisplayName() + ChatColor.DARK_GREEN + " is in"+ChatColor.WHITE+": "+ChatColor.YELLOW+other.getWorld().getName());
+						return true;
+					}
+				}else{
+					player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+					return true;
+				}
+			}
+		}
+		if(lbl.equalsIgnoreCase("pos")){
+			if(player.hasPermission("frog.pos.self")){
+				int x = (int) player.getLocation().getX();
+				int y = (int) player.getLocation().getY();
+				int z = (int) player.getLocation().getZ();
+				player.sendMessage(ChatColor.DARK_AQUA+"World: " + ChatColor.DARK_GREEN + player.getWorld().getName() + ChatColor.DARK_AQUA + " X: "+ChatColor.WHITE+x+ ChatColor.DARK_AQUA +" Y: "+ChatColor.WHITE+y+ ChatColor.DARK_AQUA +" Z: "+ChatColor.WHITE+z);
+				return true;
+			}else{
+				player.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+				return true;
 			}
 		}
 		return false;
@@ -260,7 +331,7 @@ public class daylight extends JavaPlugin implements Listener {
 			    }
 		    }
 		}
-	    evt.setQuitMessage(colour + player.getName() + ChatColor.WHITE + " quit " + ChatColor.RED + (Bukkit.getOnlinePlayers().length - 1) + ChatColor.GREEN + plural + ChatColor.WHITE + " left");
+	    evt.setQuitMessage(colour + player.getName() + ChatColor.WHITE + " quit, " + ChatColor.RED + (Bukkit.getOnlinePlayers().length - 1) + ChatColor.GREEN + plural + ChatColor.WHITE + " left");
 	}
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent evt){
@@ -268,6 +339,14 @@ public class daylight extends JavaPlugin implements Listener {
 		if(message.startsWith("frogman786 was slain")){
 			String messagemodifyed = (message + ", but actually wasn't, because nobody can kill the great frog.");
 			evt.setDeathMessage(messagemodifyed);
+		}
+	}
+	@EventHandler
+	public void onPlayerChat(AsyncPlayerChatEvent evt){
+		if(evt.getPlayer().hasPermission("frog.chat.formatting")){
+			String message = evt.getMessage();
+			String donemess = formatMessage(message);
+			evt.setMessage(donemess);
 		}
 	}
 }

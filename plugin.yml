@@ -1,6 +1,6 @@
 name: daylight
 main: com.frogman786.daylight
-version: 0.7.6
+version: 0.8.7
 depend: [Vault]
 commands:
   dawn:
@@ -21,6 +21,10 @@ commands:
     description: creates a block of glass below your feet
   promo:
     description: used to handle rank giving/taking
+  world:
+    description: used to find what world a player is in
+  pos:
+    description: /pos
 permissions:
     frog.*:
         description: Gives access to all frog commands
@@ -30,6 +34,9 @@ permissions:
             frog.gamemode.*: true
             frog.platform.*: true
             frog.promo.*: true
+            frog.chat.formatting: true
+            frog.world.*: true
+            frog.pos.*: true
         default: op
     frog.time.*:
         children:
@@ -44,6 +51,7 @@ permissions:
         children:
             frog.who.who: true
             frog.who.info: true
+            frog.who.world: true
         default: false
     frog.gamemode.*:
         children:
@@ -56,6 +64,17 @@ permissions:
             frog.platform.toggle: true
             frog.platform.other: true
         default: false
+    frog.world.*:
+        children:
+            frog.world.self: true
+            frog.world.other: true
+        default: false
+    frog.pos.*:
+        children:
+            frog.pos.self: true
+            frog.pos.other: true
+        default: false
+
     frog.time.dawn:
         description: dawn command
         default: false
@@ -78,6 +97,9 @@ permissions:
     frog.who.info:
         description: complex who with info on all players
         default: false
+    frog.who.world:
+        description: shows worlds players are in
+        default: false
 
     frog.gamemode.self:
         description: /gm
@@ -92,4 +114,22 @@ permissions:
 
     frog.promo.*:
         description: all promos
+        default: false
+    
+    frog.chat.formatting:
+        description: handles chat colour and formatting
+        default: false
+        
+    frog.world.self:
+        description: handles /world
+        default: false
+    frog.world.other:
+        description: handles /world name
+        default: false
+
+    frog.pos.self:
+        description: /pos command
+        default: false
+    frog.pos.other:
+        description: /pos name
         default: false
